@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from handler.parts import PartHandler
 from handler.supplier import SupplierHandler
+from handler.resources import ResourcesHandler
 # Import Cross-Origin Resource Sharing to enable
 # services on other ports on this machine or on other
 # machines to access this app
@@ -74,6 +75,11 @@ def getPartsBySuplierId(sid):
 @app.route('/PartApp/parts/countbypartid')
 def getCountByPartId():
     return PartHandler().getCountByPartId()
+
+@app.route('/PartApp/parts/resourcesQuantity')
+def getreQuantity():
+    return ResourcesHandler().getreQuantity()
+
 
 if __name__ == '__main__':
     app.run()
