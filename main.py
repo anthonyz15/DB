@@ -102,6 +102,10 @@ def addrequest():
                       <input type="submit" value="Submit"><br>
               </form>'''
 
+@app.route('/PartApp/parts/resourcesRequested')
+def getresourcesRequestedy():
+    return ResourcesHandler().getresourcesRequested()
+
 
 
 if __name__ == '__main__':

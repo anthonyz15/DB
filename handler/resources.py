@@ -11,11 +11,29 @@ class ResourcesHandler:
 #        result['rlocation'] = row[4]
         return result
 
+    def build_resources_Requested(self, row):
+        result = {}
+        result['name'] = row[0]
+        result['rprice'] = row[1]
+        result['quantity'] = row[2]
+        result['date'] = row[3]
+        #        result['rlocation'] = row[4]
+        return result
+
     def getreQuantity(self):
         dao = ResourcesDAO()
         result = dao.getreQuantity()
         result_list = []
         for row in result:
             result = self.build_resources_quantity(row)
+            result_list.append(result)
+        return jsonify(PartCounts = result_list), 200
+
+    def getresourcesRequested(self):
+        dao = ResourcesDAO()
+        result = dao.getresourcesRequested()
+        result_list = []
+        for row in result:
+            result = self.build_resources_Requested(row)
             result_list.append(result)
         return jsonify(PartCounts = result_list), 200
