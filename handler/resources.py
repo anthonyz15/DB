@@ -8,7 +8,7 @@ class ResourcesHandler:
         result['name'] = row[1]
         result['rquantity'] = row[2]
         result['rprice'] = row[3]
-        result['rlocation'] = row[4]
+#        result['rlocation'] = row[4]
         return result
 
     def getreQuantity(self):

@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from handler.parts import PartHandler
 from handler.supplier import SupplierHandler
 from handler.resources import ResourcesHandler
+from handler.request import RequestHandler
 # Import Cross-Origin Resource Sharing to enable
 # services on other ports on this machine or on other
 # machines to access this app
@@ -11,6 +12,9 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 # Apply CORS to this app
 CORS(app)
+
+value_add={(1,'3/17/2020','mayaguez,calle acasia',3)}
+
 
 @app.route('/')
 def greeting():
@@ -79,6 +83,25 @@ def getCountByPartId():
 @app.route('/PartApp/parts/resourcesQuantity')
 def getreQuantity():
     return ResourcesHandler().getreQuantity()
+
+@app.route('/PartApp/parts/addrequest', methods=['GET', 'POST'])
+def addrequest():
+    if request.method == 'POST':  # this block is only entered when the form is submitted
+        Date = request.form.get('Date')
+        Address = request.form['Address']
+        Quantity = request.form['Quantity']
+        if Address and Quantity and Date:
+            RequestHandler.addrequest(Date,Address,Quantity)
+            return'<h1>Added</h1>'
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
+    return '''<form method="POST">
+                      Date: <input type="text" name="Date"><br>
+                      Address: <input type="text" name="Address"><br>
+                      Quantity: <input type="text" name="Quantity"><br>
+                      <input type="submit" value="Submit"><br>
+              </form>'''
+
 
 
 if __name__ == '__main__':
