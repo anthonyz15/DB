@@ -50,7 +50,7 @@ class ResourcesDAO:
 
     def searchresourcesAvailable(self,name):
         cursor = self.conn.cursor()
-        query = "select rname, rtype, rquantity, rlocation from resources where rname = %s;"
+        query = "select rname, rtype, rquantity, rlocation from resources where rname = %s and rquantity > 0;"
         cursor.execute(query, (name,))
         result = []
         for row in cursor:
