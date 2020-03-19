@@ -106,6 +106,10 @@ def addrequest():
 def getresourcesRequestedy():
     return ResourcesHandler().getresourcesRequested()
 
+@app.route('/ResourceManagement/resources/resourcesAvailable')
+def getresourcesAvailable():
+    return ResourcesHandler().getresourcesAvailable()
+
 
 
 if __name__ == '__main__':

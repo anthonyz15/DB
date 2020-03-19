@@ -32,3 +32,17 @@ class ResourcesDAO:
         list = {('water', 5, 4, '3/17/20'), ('panadol', 1, 10, '3/12/20')}
         return list
 
+    def getresourcesAvailable(self):
+        """cursor = self.conn.cursor()
+        query = "select * from resources where rquantity>0"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        print(result)"""
+
+        list = {('water', 'nikini', 80, 'Mayaguez'),\
+                ('batteries', 'AA', 89, 'San Juan'),\
+                ('medicine', 'acetaminophen', 45, 'Ponce')}
+        return list
+

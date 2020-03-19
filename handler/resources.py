@@ -20,6 +20,14 @@ class ResourcesHandler:
         #        result['rlocation'] = row[4]
         return result
 
+    def build_resources_Available(self, row):
+            result = {}
+            result['name'] = row[0]
+            result['type'] = row[1]
+            result['rquantity'] = row[2]
+            result['rlocation'] = row[3]
+            return result
+
     def getreQuantity(self):
         dao = ResourcesDAO()
         result = dao.getreQuantity()
@@ -35,5 +43,14 @@ class ResourcesHandler:
         result_list = []
         for row in result:
             result = self.build_resources_Requested(row)
+            result_list.append(result)
+        return jsonify(PartCounts = result_list), 200
+
+    def getresourcesAvailable(self):
+        dao = ResourcesDAO()
+        result = dao.getresourcesAvailable()
+        result_list = []
+        for row in result:
+            result = self.build_resources_Available(row)
             result_list.append(result)
         return jsonify(PartCounts = result_list), 200
