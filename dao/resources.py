@@ -56,3 +56,15 @@ class ResourcesDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def getresourcesDetails(self):
+        """cursor = self.conn.cursor()
+        query = "select * from resources where rquantity>0"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        print(result)"""
+
+        list={('water',10,4,'6V65+9J Mayagüez') , ('medic',5,20,'296P+QG Ponce'), ('planta',1,200,'FVCG+9H San Juan')}
+        return list

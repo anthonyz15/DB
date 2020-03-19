@@ -13,78 +13,18 @@ app = Flask(__name__)
 # Apply CORS to this app
 CORS(app)
 
-value_add={(1,'3/17/2020','mayaguez,calle acasia',3)}
 
 
 @app.route('/')
 def greeting():
-    return 'Hello, this is the parts DB App!'
-
-@app.route('/PartApp/parts', methods=['GET', 'POST'])
-def getAllParts():
-    if request.method == 'POST':
-        # cambie a request.json pq el form no estaba bregando
-        # parece q estaba poseido por satanas ...
-        # DEBUG a ver q trae el json q manda el cliente con la nueva pieza
-        print("REQUEST: ", request.json)
-        return PartHandler().insertPartJson(request.json)
-    else:
-        if not request.args:
-            return PartHandler().getAllParts()
-        else:
-            return PartHandler().searchParts(request.args)
-
-@app.route('/PartApp/parts/<int:pid>', methods=['GET', 'PUT', 'DELETE'])
-def getPartById(pid):
-    if request.method == 'GET':
-        return PartHandler().getPartById(pid)
-    elif request.method == 'PUT':
-        return PartHandler().updatePart(pid, request.form)
-    elif request.method == 'DELETE':
-        return PartHandler().deletePart(pid)
-    else:
-        return jsonify(Error="Method not allowed."), 405
-
-@app.route('/PartApp/parts/<int:pid>/suppliers')
-def getSuppliersByPartId(pid):
-    return PartHandler().getSuppliersByPartId(pid)
-
-@app.route('/PartApp/suppliers', methods=['GET', 'POST'])
-def getAllSuppliers():
-    if request.method == 'POST':
-        return SupplierHandler().insertSupplier(request.form)
-    else :
-        if not request.args:
-            return SupplierHandler().getAllSuppliers()
-        else:
-            return SupplierHandler().searchSuppliers(request.args)
-
-@app.route('/PartApp/suppliers/<int:sid>',
-           methods=['GET', 'PUT', 'DELETE'])
-def getSupplierById(sid):
-    if request.method == 'GET':
-        return SupplierHandler().getSupplierById(sid)
-    elif request.method == 'PUT':
-        pass
-    elif request.method == 'DELETE':
-        pass
-    else:
-        return jsonify(Error = "Method not allowed"), 405
+    return 'Hello, this is the resources DB App!'
 
 
-@app.route('/PartApp/suppliers/<int:sid>/parts')
-def getPartsBySuplierId(sid):
-    return SupplierHandler().getPartsBySupplierId(sid)
-
-@app.route('/PartApp/parts/countbypartid')
-def getCountByPartId():
-    return PartHandler().getCountByPartId()
-
-@app.route('/PartApp/parts/resourcesQuantity')
+@app.route('/ResourceManagement/resources/resourcesQuantity')
 def getreQuantity():
     return ResourcesHandler().getreQuantity()
 
-@app.route('/PartApp/parts/addrequest', methods=['GET', 'POST'])
+@app.route('/ResourceManagement/resources/addrequest', methods=['GET', 'POST'])
 def addrequest():
     if request.method == 'POST':  # this block is only entered when the form is submitted
         Date = request.form.get('Date')
@@ -102,13 +42,16 @@ def addrequest():
                       <input type="submit" value="Submit"><br>
               </form>'''
 
-@app.route('/PartApp/parts/resourcesRequested')
+@app.route('/ResourceManagement/resources/resourcesRequested')
 def getresourcesRequestedy():
     return ResourcesHandler().getresourcesRequested()
 
+@app.route('/ResourceManagement/resources/resourcesDetails')
+def getresourcesDetails():
+    return ResourcesHandler().getresourcesDetails()
+
 @app.route('/ResourceManagement/resources/resourcesAvailable')
 def getresourcesAvailable():
-
     return ResourcesHandler().getresourcesAvailable()
 
 @app.route('/ResourceManagement/resources/searchresourcesAvailable', methods=['GET', 'POST'])
