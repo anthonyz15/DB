@@ -124,8 +124,18 @@ def searchresourcesAvailable():
                           <input type="submit" value="Submit"><br>
                   </form>'''
 
-
-
+@app.route('/ResourceManagement/resources/searchRequested', methods=['GET', 'POST'])
+def searchrequested():
+    if request.method == 'POST':  # this block is only entered when the form is submitted
+        Name = request.form.get('Name')
+        if Name:
+            return RequestHandler().searchrequested(Name)
+        else:
+            return jsonify(Error="Unexpected attributes in request"), 400
+    return '''<form method="POST">
+                          Name: <input type="text" name="Name"><br>
+                          <input type="submit" value="Submit"><br>
+                  </form>'''
 
 
 
