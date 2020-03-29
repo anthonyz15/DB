@@ -1,6 +1,4 @@
 from flask import Flask, jsonify, request
-from handler.parts import PartHandler
-from handler.supplier import SupplierHandler
 from handler.resources import ResourcesHandler
 from handler.request import RequestHandler
 # Import Cross-Origin Resource Sharing to enable
