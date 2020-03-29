@@ -12,3 +12,11 @@ class RequestDAO:
         print(date,quantity,adress)
         print('added')
 
+    def searchrequested(self, name):
+        cursor = self.conn.cursor()
+        query = "select rname, rtype, rquantity, rlocation from requested where rname = %s and rquantity > 0 order by rtype desc;"
+        cursor.execute(query, (name,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
