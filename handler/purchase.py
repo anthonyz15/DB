@@ -18,6 +18,15 @@ class PurchaseHandler:
         result['TotalPrice'] = row[2]
         return result
 
+    def build_resources_Orderbycoid(self,row):
+        result = {}
+        result['Name'] = row[0]
+        result['Lastname'] = row[1]
+        result['Address'] = row[3]
+        result['Price'] = row[2]
+        result['Date'] = row[4]
+        return result
+
     '''def purchase(Date,Address,Quantity,Cost):
         dao = PurchaseDAO()
         result=dao.purchase(Date,Address,Quantity,Cost)
@@ -86,3 +95,21 @@ class PurchaseHandler:
             result = self.build_resources_Order(row)
             result_list.append(result)
         return jsonify(Purchase=result_list), 200
+
+    def getPurchasebyCoid(self, coid):
+        dao = PurchaseDAO()
+        result = dao.getPurchasebyCoid(coid)
+        result_list = []
+        for row in result:
+            result = self.build_resources_Orderbycoid(row)
+            result_list.append(result)
+        return jsonify(PurchasebyCoid=result_list), 200
+
+    def getReservebyCoid(self, coid):
+        dao = PurchaseDAO()
+        result = dao.getReservebyCoid(coid)
+        result_list = []
+        for row in result:
+            result = self.build_resources_Orderbycoid(row)
+            result_list.append(result)
+        return jsonify(ReservebyCoid=result_list), 200

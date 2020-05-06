@@ -23,6 +23,14 @@ class RequestHandler:
         result['Quantity'] = row[1]
         result['Date'] = row[2]
         return result
+    def build_resources_requestbycoid(self,row):
+        result = {}
+        result['Name'] = row[0]
+        result['Lastname'] = row[1]
+        result['Address'] = row[2]
+        result['Quantity'] = row[3]
+        result['Date'] = row[4]
+        return result
 
     def addrequest(date,adress,quantity):
         dao = RequestDAO()
@@ -59,3 +67,12 @@ class RequestHandler:
             result = self.build_resources_request(row)
             result_list.append(result)
         return jsonify(Request=result_list), 200
+
+    def getRequestbyCoid(self, coid):
+        dao = RequestDAO()
+        result = dao.getRequestbyCoid(coid)
+        result_list = []
+        for row in result:
+            result = self.build_resources_requestbycoid(row)
+            result_list.append(result)
+        return jsonify(RequestbyCoid=result_list), 200

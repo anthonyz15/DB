@@ -169,5 +169,39 @@ def OrderReserve():
             return PurchaseHandler().searchOrderReservebyId(request.args.get('value'))
 
 
+@app.route('/ResourceManagement/resources/purchasebycoid', methods=['GET', 'POST'])
+def getPurchasebyCoid():
+    if request.method == 'POST':
+        print("REQUEST: ", request.json)
+        # return RequestHandler.insertPartJson(request.json)
+    else:
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return PurchaseHandler().getPurchasebyCoid(request.args.get('value'))
+
+@app.route('/ResourceManagement/resources/reservebycoid', methods=['GET', 'POST'])
+def getReservebyCoid():
+    if request.method == 'POST':
+        print("REQUEST: ", request.json)
+        # return RequestHandler.insertPartJson(request.json)
+    else:
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return PurchaseHandler().getReservebyCoid(request.args.get('value'))
+
+@app.route('/ResourceManagement/resources/requestbycoid', methods=['GET', 'POST'])
+def getRequestbyCoid():
+    if request.method == 'POST':
+        print("REQUEST: ", request.json)
+        # return RequestHandler.insertPartJson(request.json)
+    else:
+        if not request.args:
+            pass
+        else:
+            return RequestHandler().getRequestbyCoid(request.args.get('value'))
+
+
 if __name__ == '__main__':
     app.run()

@@ -75,3 +75,19 @@ class PurchaseDAO:
         for row in cursor:
             result.append(row)
         return result
+    def getPurchasebyCoid(self, id):
+        cursor = self.conn.cursor()
+        query = "SELECT  firstname,lastname,totalprice,olocation,odate FROM consumer as c inner join purchases as p on c.coid=p.coid inner join orders as o on o.oid=p.oid where c.coid=%s and totalprice>0"
+        cursor.execute(query, (id,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+    def getReservebyCoid(self, id):
+        cursor = self.conn.cursor()
+        query = "SELECT  firstname,lastname,totalprice,olocation,odate FROM consumer as c inner join reserves as rv on c.coid=rv.coid inner join orders as o on o.oid=rv.oid where c.coid=%s and totalprice=0"
+        cursor.execute(query, (id,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

@@ -41,3 +41,12 @@ class RequestDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def getRequestbyCoid(self, request):
+        cursor = self.conn.cursor()
+        query = "SELECT  firstname,lastname,quantity,rqaddress,rqdate FROM consumer as c inner join makes as mk on c.coid=mk.coid inner join request as req on req.rqid=mk.rqid where c.coid=%s"
+        cursor.execute(query, (request,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
