@@ -9,6 +9,10 @@ class ResourcesHandler:
         result['rprice'] = row[2]
         result['rlocation'] = row[3]
         return result
+    def build_resources_AnnounceAvailability(self, row):
+        result = {}
+        result['name'] = row[0]
+        return result
 
     def build_resources_Requested(self, row):
         result = {}
@@ -42,6 +46,15 @@ class ResourcesHandler:
         result_list = []
         for row in result:
             result = self.build_resources_Availability(row)
+            result_list.append(result)
+        return jsonify(Availability = result_list), 200
+
+    def getreAnnounceAvailability(self):
+        dao = ResourcesDAO()
+        result = dao.getreAnnounceAvailability()
+        result_list = []
+        for row in result:
+            result = self.build_resources_AnnounceAvailability(row)
             result_list.append(result)
         return jsonify(Availability = result_list), 200
 

@@ -24,6 +24,10 @@ def greeting():
 def getreAvailability():
     return ResourcesHandler().getreAvailability()
 
+@app.route('/ResourceManagement/resources/resourcesAnnounceAvailability')
+def getreAnnounceAvailability():
+    return ResourcesHandler().getreAnnounceAvailability()
+
 @app.route('/ResourceManagement/resources/addrequest', methods=['GET', 'POST'])
 def addrequest():
     if request.method == 'POST':
