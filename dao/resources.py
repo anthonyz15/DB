@@ -7,50 +7,45 @@ class ResourcesDAO:
                                                                            pg_config['passwd'])
         self.conn = psycopg2._connect(connection_url)
 
-    def getreQuantity(self):
-        """cursor = self.conn.cursor()
-        query = "select * from resources where rquantity>0"
+    def getreAvailability(self):
+        cursor = self.conn.cursor()
+        query = "SELECT  rname,rquantity,rprice,rlocation FROM resources WHERE rid NOT IN (SELECT rid FROM contains)"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
-        print(result)"""
-
-        list={(1,'lol',10,4,'mayaguez') , (2,'medic',5,20,'ponce'), (4,'planta',1,200,'San juan')}
-        return list
+        return  result
 
     def getresourcesRequested(self):
-        """cursor = self.conn.cursor()
+        cursor = self.conn.cursor()
         query = "select * from resources where rquantity>0"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
-        print(result)"""
+        return result
 
-        list = {('water', 5, 4, '3/17/20'), ('panadol', 1, 10, '3/12/20')}
-        return list
+    def getresourcesInRequest(self,id):
+        cursor = self.conn.cursor()
+        query = "SELECT  rname,rtype FROM resources as r inner join requested as rq on r.rid=rq.rid where rqid=%s order by rname"
+        cursor.execute(query,(id,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getresourcesAvailable(self):
-        """cursor = self.conn.cursor()
-        query = "select * from resources where rquantity>0"
+        cursor = self.conn.cursor()
+        query = "select rname,rprice,rquantity,rlocation from resources"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
-        print(result)"""
-
-        list = {('water', 'nikini', 80, 'Mayaguez'), \
-                ('batteries', 'AA', 89, 'San Juan'), \
-                ('medicine', 'acetaminophen', 45, 'Ponce'), \
-                ('water', 'dasani', 100, 'Caguas'), \
-                ('batteries', 'AAA', 89, 'San Juan'), \
-                ('medicine', 'tylenol', 45, 'Carolina')}
-        return list
+        return result
 
     def searchresourcesAvailable(self,name):
         cursor = self.conn.cursor()
-        query = "select rname, rtype, rquantity, rlocation from resources where rname = %s and rquantity > 0 order by rtype desc;"
+        query = "SELECT  rname,rtype,rquantity,rprice,rlocation FROM resources WHERE rid NOT IN (SELECT rid FROM requested) and rname like %s order by rtype"
         cursor.execute(query, (name,))
         result = []
         for row in cursor:
@@ -58,13 +53,19 @@ class ResourcesDAO:
         return result
 
     def getresourcesDetails(self):
-        """cursor = self.conn.cursor()
-        query = "select * from resources where rquantity>0"
+        cursor = self.conn.cursor()
+        query = "select rname, rquantity,rprice, rlocation from resources"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
-        print(result)"""
+        return result
 
-        list={('water',10,4,'6V65+9J Mayagüez') , ('medic',5,20,'296P+QG Ponce'), ('planta',1,200,'FVCG+9H San Juan')}
-        return list
+    def searchResourcesbyId(self,id):
+        cursor = self.conn.cursor()
+        query = "select rname, rquantity,rprice, rlocation from resources where rid=%s"
+        cursor.execute(query,(id))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

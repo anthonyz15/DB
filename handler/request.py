@@ -7,14 +7,31 @@ class RequestHandler:
         result = {}
         result['rqname'] = row[0]
         result['type'] = row[1]
-        result['rquantity'] = row[2]
-        result['rqlocation'] = row[3]
+        result['rqquantity'] = row[2]
+        result['rqaddress'] = row[3]
+        result['rqdate'] = row[4]
         return result
-
+    def build_resources_addrequest(self,row):
+        result = {}
+        result['Date'] = row[0]
+        result['Quantity'] = row[1]
+        result['Address'] = row[2]
+        return result
+    def build_resources_request(self,row):
+        result = {}
+        result['Address'] = row[0]
+        result['Quantity'] = row[1]
+        result['Date'] = row[2]
+        return result
 
     def addrequest(date,adress,quantity):
         dao = RequestDAO()
-        dao.addrequest(date,quantity,adress)
+        result=dao.addrequest(date,quantity,adress)
+        result_list = []
+        for row in result:
+            result = RequestHandler.build_resources_addrequest(row)
+            result_list.append(result)
+        return jsonify(Requested=result_list), 200
 
     def searchrequested(self,name):
         dao = RequestDAO()
@@ -23,4 +40,22 @@ class RequestHandler:
         for row in result:
             result = self.build_requested(row)
             result_list.append(result)
-        return jsonify(PartCounts = result_list), 200
+        return jsonify(Search_Requested = result_list), 200
+
+    def getrequest(self):
+        dao = RequestDAO()
+        result = dao.getrequest()
+        result_list = []
+        for row in result:
+            result = self.build_resources_request(row)
+            result_list.append(result)
+        return jsonify(Requests=result_list), 200
+
+    def searchrequest(self, request):
+        dao = RequestDAO()
+        result = dao.searchrequest(request)
+        result_list = []
+        for row in result:
+            result = self.build_resources_request(row)
+            result_list.append(result)
+        return jsonify(Request=result_list), 200
