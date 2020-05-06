@@ -3,7 +3,7 @@ from dao.purchase import PurchaseDAO
 
 class PurchaseHandler:
 
-    def build_resources_purchase(row):
+    def build_resources_purchase(self,row):
         result = {}
         result['Date'] = row[0]
         result['Address'] = row[1]
@@ -11,7 +11,7 @@ class PurchaseHandler:
         result['Cost'] = row[3]
         return result
 
-    def build_resources_Order(row):
+    def build_resources_Order(self,row):
         result = {}
         result['Date'] = row[0]
         result['Address'] = row[1]
@@ -64,6 +64,23 @@ class PurchaseHandler:
     def searchOrderPurchasebyId(self,id):
         dao = PurchaseDAO()
         result=dao.searchOrderPurchasebyId(id)
+        result_list = []
+        for row in result:
+            result = self.build_resources_Order(row)
+            result_list.append(result)
+        return jsonify(Purchase=result_list), 200
+
+    def getOrderReserve(self):
+        dao = PurchaseDAO()
+        result=dao.getOrderReserve()
+        result_list = []
+        for row in result:
+            result = self.build_resources_Order(row)
+            result_list.append(result)
+        return jsonify(Reserves=result_list), 200
+    def searchOrderReservebyId(self,id):
+        dao = PurchaseDAO()
+        result=dao.searchOrderReservebyId(id)
         result_list = []
         for row in result:
             result = self.build_resources_Order(row)

@@ -57,3 +57,21 @@ class PurchaseDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def getOrderReserve(self):
+        cursor = self.conn.cursor()
+        query = "select odate,olocation,totalprice from orders where totalprice=0"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def searchOrderReservebyId(self, id):
+        cursor = self.conn.cursor()
+        query = "select odate,olocation,totalprice from orders where totalprice=0 and oid=%s"
+        cursor.execute(query, (id,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
