@@ -21,6 +21,17 @@ class RegisterHandler:
         result['password'] = row[1]
         result['email'] = row[2]
         return result
+
+    def build_resources_addAdmin(uname,passwrd,email,firstname,lastname):
+        result = {}
+        result['Username'] = uname
+        result['Password'] = passwrd
+        result['Email'] = email
+        result['Firstname'] = firstname
+        result['Lastname'] = lastname
+        return result
+
+
     def signup(self,username, password, email):
         dao = RegisterDAO()
         result=dao.signup(username, password, email)
@@ -108,3 +119,18 @@ class RegisterHandler:
             result = self.build_resources_register2(row)
             result_list.append(result)
         return jsonify(Consumers=result_list), 200
+
+
+    def insertAdminJson(json):
+        uname = json['uname']
+        passwrd = json['passwrd']
+        email= json['email']
+        firstname = json['firstname']
+        lastname = json['lastname']
+        if uname and passwrd and email and firstname and lastname:
+            dao = RegisterDAO()
+            pid = dao.insertAdmin(uname,passwrd,email,firstname,lastname)
+            result = RegisterHandler.build_resources_addAdmin(uname,passwrd,email,firstname,lastname)
+            return jsonify(Admin=result), 201
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400

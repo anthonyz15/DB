@@ -92,3 +92,11 @@ class RegisterDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def insertAdmin(self, uname,passwrd,email,firstname,lastname):
+        cursor = self.conn.cursor()
+        query = "insert into admins(uname,passwrd,email,firstname,lastname) values (%s, %s, %s , %s, %s) returning adminid;"
+        cursor.execute(query, (uname,passwrd,email,firstname,lastname,))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid

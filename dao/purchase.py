@@ -91,3 +91,11 @@ class PurchaseDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def insertOrder(self, odate,olocation,totalprice):
+        cursor = self.conn.cursor()
+        query = "insert into orders(odate,olocation,totalprice) values (%s, %s, %s) returning oid;"
+        cursor.execute(query, (odate,olocation,totalprice,))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid

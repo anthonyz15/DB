@@ -108,7 +108,7 @@ def consumer():
 def admin():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
-        #return RequestHandler.insertPartJson(request.json)
+        return RegisterHandler.insertAdminJson(request.json)
     else:
         if not request.args:
             return RegisterHandler().getAdmins()
@@ -154,7 +154,7 @@ def reserve():
 def OrderPurchase():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
-        # return RequestHandler.insertPartJson(request.json)
+        return PurchaseHandler.insertOrderJson(request.json)
     else:
         if not request.args:
             return PurchaseHandler().getOrderPurchase()
@@ -165,7 +165,7 @@ def OrderPurchase():
 def OrderReserve():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
-        # return RequestHandler.insertPartJson(request.json)
+        return PurchaseHandler.insertOrderJson(request.json)
     else:
         if not request.args:
             return PurchaseHandler().getOrderReserve()

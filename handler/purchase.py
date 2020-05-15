@@ -27,6 +27,13 @@ class PurchaseHandler:
         result['Date'] = row[4]
         return result
 
+    def build_resources_addOrder(odate,olocation,totalprice):
+        result = {}
+        result['Date'] = odate
+        result['Location'] = olocation
+        result['TotalPrice'] = totalprice
+        return result
+
     '''def purchase(Date,Address,Quantity,Cost):
         dao = PurchaseDAO()
         result=dao.purchase(Date,Address,Quantity,Cost)
@@ -113,3 +120,15 @@ class PurchaseHandler:
             result = self.build_resources_Orderbycoid(row)
             result_list.append(result)
         return jsonify(ReservebyCoid=result_list), 200
+
+    def insertOrderJson(json):
+        odate = json['odate']
+        olocation = json['olocation']
+        totalprice= json['totalprice']
+        if odate and olocation and totalprice:
+            dao = PurchaseDAO()
+            pid = dao.insertOrder(odate,olocation,totalprice)
+            result = PurchaseHandler.build_resources_addOrder(odate,olocation,totalprice)
+            return jsonify(request=result), 201
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
