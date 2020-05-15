@@ -31,6 +31,27 @@ class RegisterHandler:
         result['Lastname'] = lastname
         return result
 
+    def build_resources_addConsumer(uname, passwrd, email, firstname, lastname, caddress, phone):
+        result = {}
+        result['Username'] = uname
+        result['Password'] = passwrd
+        result['Email'] = email
+        result['Firstname'] = firstname
+        result['Lastname'] = lastname
+        result['Address'] = caddress
+        result['Phone'] = phone
+        return result
+
+    def build_resources_addSupplier(uname, passwrd, email, firstname, lastname, address):
+        result = {}
+        result['Username'] = uname
+        result['Password'] = passwrd
+        result['Email'] = email
+        result['Firstname'] = firstname
+        result['Lastname'] = lastname
+        result['Address'] = address
+        return result
+
 
     def signup(self,username, password, email):
         dao = RegisterDAO()
@@ -132,5 +153,40 @@ class RegisterHandler:
             pid = dao.insertAdmin(uname,passwrd,email,firstname,lastname)
             result = RegisterHandler.build_resources_addAdmin(uname,passwrd,email,firstname,lastname)
             return jsonify(Admin=result), 201
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
+
+
+    def insertConsumerJson(json):
+        uname = json['uname']
+        passwrd = json['passwrd']
+        email= json['email']
+        firstname = json['firstname']
+        lastname = json['lastname']
+        caddress = json['address']
+        phone = json['phone']
+        if uname and passwrd and email and firstname and lastname and caddress:
+            dao = RegisterDAO()
+            pid = dao.insertConsumer(uname,passwrd,email,firstname,lastname,caddress)
+            if phone != "":
+                dao.insertPhone(pid,phone)
+            result = RegisterHandler.build_resources_addConsumer(uname,passwrd,email,firstname,lastname,caddress, phone)
+            return jsonify(Consumer=result), 201
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
+
+
+    def insertSupplierJson(json):
+        uname = json['uname']
+        passwrd = json['passwrd']
+        email = json['email']
+        firstname = json['firstname']
+        lastname = json['lastname']
+        address = json['address']
+        if uname and passwrd and email and firstname and lastname and address:
+            dao = RegisterDAO()
+            pid = dao.insertSupplier(uname, passwrd, email, firstname, lastname, address)
+            result = RegisterHandler.build_resources_addSupplier(uname, passwrd, email, firstname, lastname, address)
+            return jsonify(Supplier=result), 201
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400

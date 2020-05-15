@@ -93,16 +93,18 @@ def users():
         else:
             return RegisterHandler().searchUsersbyId(request.args.get('value'))
 
-@app.route('/ResourceManagement/resources/consumer', methods=['GET', 'POST'])
+
+@app.route('/ResourceManagement/resources/signup/consumer', methods=['GET', 'POST'])
 def consumer():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
-        # return RequestHandler.insertPartJson(request.json)
+        return RegisterHandler.insertConsumerJson(request.json)
     else:
         if not request.args:
             return RegisterHandler().getConsumers()
         else:
             return RegisterHandler().searchConsumersbyId(request.args.get('value'))
+
 
 @app.route('/ResourceManagement/resources/signup/admin', methods=['GET', 'POST'])
 def admin():
@@ -119,7 +121,7 @@ def admin():
 def supplier():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
-        #return RequestHandler.insertPartJson(request.json)
+        return RegisterHandler.insertSupplierJson(request.json)
     else:
         if not request.args:
             return RegisterHandler().getsupplier()
