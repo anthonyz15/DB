@@ -3,6 +3,7 @@ from handler.resources import ResourcesHandler
 from handler.request import RequestHandler
 from handler.register import RegisterHandler
 from handler.purchase import PurchaseHandler
+from handler.company import CompanyHandler
 # Import Cross-Origin Resource Sharing to enable
 # services on other ports on this machine or on other
 # machines to access this app
@@ -81,6 +82,17 @@ def searchresourcesAvailable():
     else:
         return ResourcesHandler().searchresourcesAvailable(request.args.get('value'))
 
+@app.route('/ResourceManagement/resources/addresources', methods=['GET', 'POST'])
+def addresources():
+    if request.method == 'POST':
+        print("REQUEST: ", request.json)
+        return ResourcesHandler.insertresourcesJson(request.json)
+    else:
+        if not request.args:
+            return ResourcesHandler().getresourcesAvailable()
+        else:
+            return ResourcesHandler().searchresourcesAvailable(request.args.get('value'))
+
 
 @app.route('/ResourceManagement/resources/users', methods=['GET', 'POST'])
 def users():
@@ -125,6 +137,14 @@ def supplier():
             return RegisterHandler().getsupplier()
         else:
             return RegisterHandler().searchsupplierbyId(request.args.get('value'))
+
+@app.route('/ResourceManagement/resources/company', methods=['GET', 'POST'])
+def addcompany():
+    if request.method == 'POST':
+        print("REQUEST: ", request.json)
+        return CompanyHandler.insertcompanyJson(request.json)
+    else:
+        return CompanyHandler().getCompany()
 
 
 
@@ -205,6 +225,7 @@ def getRequestbyCoid():
             pass
         else:
             return RequestHandler().getRequestbyCoid(request.args.get('value'))
+
 
 
 if __name__ == '__main__':

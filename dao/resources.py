@@ -78,3 +78,11 @@ class ResourcesDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def insertresources(self, rname, rquantity, rprice, type, rlocation):
+        cursor = self.conn.cursor()
+        query = "insert into resources(rname,rquantity,rprice,rtype,rlocation) values (%s, %s, %s, %s, %s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid

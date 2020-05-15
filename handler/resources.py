@@ -40,6 +40,16 @@ class ResourcesHandler:
         result['location'] = row[4]
         return result
 
+    def build_resources_addresources(rname, rquantity, rprice, type, rlocation):
+        result = {}
+        result['Name'] = rname
+        result['Quantity'] = rquantity
+        result['Price'] = rprice
+        result['Type'] = type
+        result['Location'] = rlocation
+        return result
+
+
     def getreAvailability(self):
         dao = ResourcesDAO()
         result = dao.getreAvailability()
@@ -112,3 +122,18 @@ class ResourcesHandler:
             result = self.build_resources_Availability(row)
             result_list.append(result)
         return jsonify(ResourcesCount = result_list), 200
+
+
+    def insertresourcesJson(json):
+        rname = json['rname']
+        rquantity = json['rquantity']
+        rprice = json['rprice']
+        type = json['rtype']
+        rlocation = json['rlocation']
+        if rname and rquantity and rprice and type and rlocation:
+            dao = ResourcesDAO()
+            pid = dao.insertresources(rname, rquantity, rprice, type, rlocation)
+            result = ResourcesHandler.build_resources_addresources(rname, rquantity, rprice, type, rlocation)
+            return jsonify(Resources=result), 201
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
