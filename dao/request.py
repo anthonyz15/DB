@@ -50,3 +50,12 @@ class RequestDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def insertrequest(self, rqaddress,quantity,rqdate):
+        cursor = self.conn.cursor()
+        query = "insert into request(rqaddress,quantity,rqdate) values (%s, %s, %s) returning rqid;"
+        cursor.execute(query, (rqaddress,quantity,rqdate,))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+

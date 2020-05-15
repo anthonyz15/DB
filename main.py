@@ -32,7 +32,7 @@ def getreAnnounceAvailability():
 def addrequest():
     if request.method == 'POST':
         print("REQUEST: ", request.json)
-        #return RequestHandler.insertPartJson(request.json)
+        return RequestHandler.insertrequestJson(request.json)
     else:
         if not request.args:
             return RequestHandler().getrequest()

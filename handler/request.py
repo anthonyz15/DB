@@ -23,6 +23,12 @@ class RequestHandler:
         result['Quantity'] = row[1]
         result['Date'] = row[2]
         return result
+    def build_resources_addrequest(rqaddress,quantity,rqdate):
+        result = {}
+        result['Address'] = rqaddress
+        result['Quantity'] = quantity
+        result['Date'] = rqdate
+        return result
     def build_resources_requestbycoid(self,row):
         result = {}
         result['Name'] = row[0]
@@ -76,3 +82,15 @@ class RequestHandler:
             result = self.build_resources_requestbycoid(row)
             result_list.append(result)
         return jsonify(RequestbyCoid=result_list), 200
+
+    def insertrequestJson(json):
+        rqaddress = json['rqaddress']
+        quantity = json['quantity']
+        rqdate = json['rqdate']
+        if rqaddress and quantity and rqdate:
+            dao = RequestDAO()
+            pid = dao.insertrequest(rqaddress,quantity,rqdate)
+            result = RequestHandler.build_resources_addrequest(rqaddress,quantity,rqdate)
+            return jsonify(request=result), 201
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
