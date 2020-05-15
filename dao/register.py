@@ -100,3 +100,25 @@ class RegisterDAO:
         pid = cursor.fetchone()[0]
         self.conn.commit()
         return pid
+
+    def insertConsumer(self, uname, passwrd, email, firstname, lastname,caddress):
+        cursor = self.conn.cursor()
+        query = "insert into consumer(uname,passwrd,email,firstname,lastname,caddress) values (%s, %s, %s , %s, %s, %s) returning coid;"
+        cursor.execute(query, (uname, passwrd, email, firstname, lastname,caddress))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+    def insertPhone(self, coid, phone):
+        cursor = self.conn.cursor()
+        query = "insert into phone(coid, phone_1) values (%s, %s) returning phid;"
+        cursor.execute(query, (coid, phone))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+    def insertSupplier(self, uname, passwrd, email, firstname, lastname,address):
+        cursor = self.conn.cursor()
+        query = "insert into supplier(uname,passwrd,email,firstname,lastname,address) values (%s, %s, %s , %s, %s, %s) returning sid;"
+        cursor.execute(query, (uname, passwrd, email, firstname, lastname,address))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
