@@ -95,3 +95,13 @@ class ResourcesDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def dailyMatching(self,date):
+        cursor = self.conn.cursor()
+        query = "SELECT resources.rname, request.rqdate, sum(request.quantity) as Needed, sum(resources.rquantity) as Available FROM public.request, public.requested, public.resources WHERE request.rqid = requested.rqid AND requested.rid = resources.rid and request.rqdate = %s and  resources.rid not in (select rid from contains) Group by resources.rname, request.rqdate ;"
+        cursor.execute(query, (date,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+

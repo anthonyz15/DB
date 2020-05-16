@@ -40,6 +40,13 @@ def dailyResourcesinNeed():
 def dailyResourcesAvailable():
     return ResourcesHandler().dailyResourcesAvailable()
 
+@app.route('/ResourceManagement/resources/dailyMatching', methods=['GET', 'POST'])
+def dailyMatching():
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return ResourcesHandler().dailyMatching(request.args.get('value'))
+
 @app.route('/ResourceManagement/resources/addrequest', methods=['GET', 'POST'])
 def addrequest():
     if request.method == 'POST':
