@@ -194,7 +194,7 @@ class ResourcesHandler:
         for row in result:
             result = self.build_weeklyMatching(row)
             result_list.append(result)
-        return jsonify(dailyMatching=result_list), 200
+        return jsonify(weeklyMatching=result_list), 200
 
 
     def locationMatching(self):
