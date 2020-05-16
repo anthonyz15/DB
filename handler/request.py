@@ -37,6 +37,13 @@ class RequestHandler:
         result['Quantity'] = row[3]
         result['Date'] = row[4]
         return result
+    def build_dailyinneed(self,row):
+        result = {}
+        result['Name'] = row[0]
+        result['Sum'] = row[1]
+        result['Date'] = row[2]
+        return result
+
 
     def addrequest(date,adress,quantity):
         dao = RequestDAO()
@@ -82,6 +89,15 @@ class RequestHandler:
             result = self.build_resources_requestbycoid(row)
             result_list.append(result)
         return jsonify(RequestbyCoid=result_list), 200
+
+    def dailyResourcesinNeed(self,date):
+        dao = RequestDAO()
+        result = dao.dailyResourcesinNeed(date)
+        result_list = []
+        for row in result:
+            result = self.build_dailyinneed(row)
+            result_list.append(result)
+        return jsonify(ResourcesinNeed=result_list), 200
 
     def insertrequestJson(json):
         rqaddress = json['rqaddress']

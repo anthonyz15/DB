@@ -86,3 +86,12 @@ class ResourcesDAO:
         pid = cursor.fetchone()[0]
         self.conn.commit()
         return pid
+
+    def dailyResourcesAvailable(self):
+        cursor = self.conn.cursor()
+        query = "SELECT resources.rname, resources.rlocation, sum(resources.rquantity) as Available FROM resources WHERE resources.rid NOT IN ( Select rid from contains) Group by resources.rname, resources.rlocation;"
+        cursor.execute(query,)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

@@ -1,7 +1,7 @@
 # Databse configuration information
 
 pg_config = {
-    'user': 'beauchamp',
-    'passwd': 'password',
-    'dbname': 'project1'
+    'user': 'anthonyz15',
+    'passwd': 'Icom5016',
+    'dbname': 'project1db'
 }

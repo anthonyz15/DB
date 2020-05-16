@@ -49,6 +49,13 @@ class ResourcesHandler:
         result['Location'] = rlocation
         return result
 
+    def dailyResourcesAvailable(self,row):
+        result = {}
+        result['Name'] = row[0]
+        result['Location'] = row[1]
+        result['Quantity'] = row[2]
+        return result
+
 
     def getreAvailability(self):
         dao = ResourcesDAO()
@@ -122,6 +129,16 @@ class ResourcesHandler:
             result = self.build_resources_Availability(row)
             result_list.append(result)
         return jsonify(ResourcesCount = result_list), 200
+
+
+    def dailyResourcesAvailable(self):
+        dao = ResourcesDAO()
+        result = dao.dailyResourcesAvailable()
+        result_list = []
+        for row in result:
+            result = ResourcesHandler.dailyResourcesAvailable(row)
+            result_list.append(result)
+        return jsonify(dailyResourcesAvailable=result_list), 200
 
 
     def insertresourcesJson(json):

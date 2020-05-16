@@ -29,6 +29,17 @@ def getreAvailability():
 def getreAnnounceAvailability():
     return ResourcesHandler().getreAnnounceAvailability()
 
+@app.route('/ResourceManagement/resources/dailyResourcesinNeed', methods=['GET', 'POST'])
+def dailyResourcesinNeed():
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return RequestHandler().dailyResourcesinNeed(request.args.get('value'))
+
+@app.route('/ResourceManagement/resources/dailyResourcesAvailable', methods=['GET', 'POST'])
+def dailyResourcesAvailable():
+    return ResourcesHandler().dailyResourcesAvailable()
+
 @app.route('/ResourceManagement/resources/addrequest', methods=['GET', 'POST'])
 def addrequest():
     if request.method == 'POST':
