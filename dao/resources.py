@@ -96,6 +96,15 @@ class ResourcesDAO:
             result.append(row)
         return result
 
+    def dailyMatching(self, date):
+        cursor = self.conn.cursor()
+        query = "SELECT resources.rname, request.rqdate, sum(request.quantity) as Needed, sum(resources.rquantity) as Available FROM public.request, public.requested, public.resources WHERE request.rqid = requested.rqid AND requested.rid = resources.rid and request.rqdate = %s and  resources.rid not in (select rid from contains) Group by resources.rname, request.rqdate ;"
+        cursor.execute(query, (date,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def locationMatching(self):
         cursor = self.conn.cursor()
         query = "SELECT resources.rname,  sum(resources.rquantity) as Available,   sum(request.quantity) as Needed,  request.rqaddress FROM public.resources, public.request,   public.requested WHERE   request.rqid = requested.rqid AND  request.rqaddress = resources.rlocation AND  requested.rid = resources.rid and resources.rid NOT IN (Select rid from contains) Group by resources.rname, request.rqaddress;"

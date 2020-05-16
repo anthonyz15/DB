@@ -56,6 +56,14 @@ class ResourcesHandler:
         result['Quantity'] = row[2]
         return result
 
+    def build_dailyMatching(self, row):
+        result = {}
+        result['Name'] = row[0]
+        result['Available'] = row[3]
+        result['Needed'] = row[2]
+        result['Address'] = row[1]
+        return result
+
     def build_locationMatch(self,row):
         result = {}
         result['Resources'] = row[0]
@@ -161,6 +169,18 @@ class ResourcesHandler:
             result = self.build_dailyResourcesAvailable(row)
             result_list.append(result)
         return jsonify(dailyResourcesAvailable=result_list), 200
+
+    def dailyMatching(self,date):
+        dao = ResourcesDAO()
+        result = dao.dailyMatching(date)
+        result_list = []
+        for row in result:
+            result = self.build_dailyMatching(row)
+            result_list.append(result)
+        return jsonify(dailyMatching=result_list), 200
+
+
+
 
     def locationMatching(self):
         dao = ResourcesDAO()
