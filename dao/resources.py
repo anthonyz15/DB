@@ -142,16 +142,16 @@ class ResourcesDAO:
                     else:
                         day = int(date1[2]) + 7
 
-            year = str(year)
-            if month < 10:
-                month = "0" + str(month)
-            else:
-                month = str(month)
+        year = str(year)
+        if month < 10:
+            month = "0" + str(month)
+        else:
+            month = str(month)
 
-            if day < 10:
-                day = "0" + str(day)
-            else:
-                day = str(day)
+        if day < 10:
+            day = "0" + str(day)
+        else:
+            day = str(day)
 
         date2 = year + "-" + month + "-" + day
         print(year + "-" + month + "-" + day)
