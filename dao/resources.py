@@ -156,7 +156,7 @@ class ResourcesDAO:
         date2 = year + "-" + month + "-" + day
         print(year + "-" + month + "-" + day)
 
-        query = "SELECT rqdate as Week1stDate,resources.rname,sum(resources.rquantity) as Available,sum(request.quantity) as Needed FROM public.resources,public.request,public.requested WHERE request.rqid = requested.rqid AND request.rqaddress = resources.rlocation AND requested.rid = resources.rid  and rqdate between  %s and %s group by resources.rname,rqdate;  "
+        query = "SELECT rqdate as Week1stDate,resources.rname,sum(resources.rquantity) as Available,sum(request.quantity) as Needed FROM public.resources,public.request,public.requested WHERE request.rqid = requested.rqid  AND requested.rid = resources.rid  and rqdate between  %s and %s group by resources.rname,rqdate;  "
         cursor.execute(query, (date, date2,), )
         result = []
         for row in cursor:

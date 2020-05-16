@@ -66,10 +66,10 @@ class ResourcesHandler:
 
     def build_weeklyMatching(self, row):
         result = {}
-        result['Name'] = row[0]
+        result['Name'] = row[1]
         result['Available'] = row[3]
         result['Needed'] = row[2]
-        result['Address'] = row[1]
+        result['Date'] = row[0]
         return result
 
     def build_locationMatch(self,row):
