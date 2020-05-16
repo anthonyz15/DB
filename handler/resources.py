@@ -56,6 +56,28 @@ class ResourcesHandler:
         result['Quantity'] = row[2]
         return result
 
+    def build_locationMatch(self,row):
+        result = {}
+        result['Resources'] = row[0]
+        result['Available'] = row[1]
+        result['Needed'] = row[2]
+        result['Location'] = row[3]
+        return result
+
+    def build_locationAvailable(self,row):
+        result = {}
+        result['Resources'] = row[0]
+        result['Location'] = row[1]
+        result['Quantity'] = row[2]
+        return result
+
+    def build_locationNeeded(self,row):
+        result = {}
+        result['Resources'] = row[0]
+        result['Quantity'] = row[1]
+        result['Location'] = row[2]
+        return result
+
 
     def getreAvailability(self):
         dao = ResourcesDAO()
@@ -140,6 +162,32 @@ class ResourcesHandler:
             result_list.append(result)
         return jsonify(dailyResourcesAvailable=result_list), 200
 
+    def locationMatching(self):
+        dao = ResourcesDAO()
+        result = dao.locationMatching()
+        result_list = []
+        for row in result:
+            result = self.build_locationMatch(row)
+            result_list.append(result)
+        return jsonify(locationMatching=result_list), 200
+
+    def locationAvailable(self):
+        dao = ResourcesDAO()
+        result = dao.locationAvailable()
+        result_list = []
+        for row in result:
+            result = self.build_locationAvailable(row)
+            result_list.append(result)
+        return jsonify(locationAvailable=result_list), 200
+
+    def locationNeeded(self):
+        dao = ResourcesDAO()
+        result = dao.locationNeeded()
+        result_list = []
+        for row in result:
+            result = self.build_locationNeeded(row)
+            result_list.append(result)
+        return jsonify(locationNeeded=result_list), 200
 
     def insertresourcesJson(json):
         rname = json['rname']

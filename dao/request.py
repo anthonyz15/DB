@@ -61,6 +61,10 @@ class RequestDAO:
 
 
 
+
+
+
+
     def dailyResourcesinNeed(self,date):
         cursor = self.conn.cursor()
         query = "SELECT resources.rname, sum(request.quantity), request.rqdate FROM public.request, public.requested,public.resources WHERE request.rqid = requested.rqid AND requested.rid = resources.rid and request.rqdate = %s group by resources.rname, request.rqdate;"
