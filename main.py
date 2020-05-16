@@ -40,18 +40,6 @@ def dailyResourcesinNeed():
 def dailyResourcesAvailable():
     return ResourcesHandler().dailyResourcesAvailable()
 
-@app.route('/ResourceManagement/resources/LocationMatching', methods=['GET', 'POST'])
-def locationMatching():
-    return ResourcesHandler().locationMatching()
-@app.route('/ResourceManagement/resources/LocationAvailable', methods=['GET', 'POST'])
-def locationAvailable():
-    return ResourcesHandler().locationAvailable()
-
-@app.route('/ResourceManagement/resources/LocationNeeded', methods=['GET', 'POST'])
-def locationNeeded():
-    return ResourcesHandler().locationNeeded()
-
-
 @app.route('/ResourceManagement/resources/addrequest', methods=['GET', 'POST'])
 def addrequest():
     if request.method == 'POST':

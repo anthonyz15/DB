@@ -40,7 +40,7 @@ class RequestHandler:
     def build_dailyinneed(self,row):
         result = {}
         result['Name'] = row[0]
-        result['Sum'] = row[1]
+        result['Quantity'] = row[1]
         result['Date'] = row[2]
         return result
 

@@ -95,30 +95,3 @@ class ResourcesDAO:
         for row in cursor:
             result.append(row)
         return result
-
-    def locationMatching(self):
-        cursor = self.conn.cursor()
-        query = "SELECT resources.rname,  sum(resources.rquantity) as Available,   sum(request.quantity) as Needed,  request.rqaddress FROM public.resources, public.request,   public.requested WHERE   request.rqid = requested.rqid AND  request.rqaddress = resources.rlocation AND  requested.rid = resources.rid and resources.rid NOT IN (Select rid from contains) Group by resources.rname, request.rqaddress;"
-        cursor.execute(query, )
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-    def locationAvailable(self):
-        cursor = self.conn.cursor()
-        query = " SELECT resources.rname, resources.rlocation, sum(resources.rquantity) as Available FROM public.resources WHERE resources.rid NOT IN (Select rid from contains)  Group by resources.rname,  resources.rlocation order by rlocation;"
-        cursor.execute(query, )
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-    def locationNeeded(self):
-        cursor = self.conn.cursor()
-        query = "SELECT resources.rname, sum(request.quantity) as Needed, request.rqaddress FROM public.request, public.requested, public.resources WHERE requested.rqid = request.rqid AND resources.rid = requested.rid Group By resources.rname, request.rqaddress order by rqaddress;"
-        cursor.execute(query, )
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
