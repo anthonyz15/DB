@@ -105,6 +105,15 @@ class ResourcesDAO:
             result.append(row)
         return result
 
+    def weeklyMatching(self, date):
+        cursor = self.conn.cursor()
+        query = "SELECT to_char(rqdate, 'IYYY-IW') as YearWeek,resources.rname,sum(resources.rquantity) as Available,sum(request.quantity) as Needed FROM public.resources,public.request,public.requested WHERE request.rqid = requested.rqid AND request.rqaddress = resources.rlocation AND requested.rid = resources.rid group by resources.rname,to_char(rqdate, 'IYYY-IW');  "
+        cursor.execute(query, (date, date,), )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def locationMatching(self):
         cursor = self.conn.cursor()
         query = "SELECT resources.rname,  sum(resources.rquantity) as Available,   sum(request.quantity) as Needed,  request.rqaddress FROM public.resources, public.request,   public.requested WHERE   request.rqid = requested.rqid AND  request.rqaddress = resources.rlocation AND  requested.rid = resources.rid and resources.rid NOT IN (Select rid from contains) Group by resources.rname, request.rqaddress;"
