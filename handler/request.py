@@ -101,9 +101,10 @@ class RequestHandler:
 
     def build_weeklyinneed(self, row):
         result = {}
-        result['Name'] = row[0]
-        result['Quantity'] = row[1]
-        result['Date'] = row[2]
+        result['Name'] = row[1]
+        result['Quantity'] = row[2]
+        result['Date'] = row[0]
+
         return result
 
     def weeklyResourcesinNeed(self, date):

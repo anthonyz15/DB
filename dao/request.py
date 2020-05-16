@@ -125,7 +125,7 @@ class RequestDAO:
         date2 = year + "-" + month + "-" + day
         print(year +"-" +month+"-" + day)
 
-        query = "SELECT rqdate as Week1stDate, resources.rname, sum(request.quantity), request.rqdate FROM public.request, public.requested,public.resources WHERE request.rqid = requested.rqid AND requested.rid = resources.rid and request.rqdate between %s and %s group by  request.rqdate, resources.rname;"
+        query = "SELECT rqdate as Week1stDate, resources.rname, sum(request.quantity) FROM public.request, public.requested,public.resources WHERE request.rqid = requested.rqid AND requested.rid = resources.rid and request.rqdate between %s and %s group by  request.rqdate, resources.rname;"
         cursor.execute(query, (date,date2,))
         result = []
         for row in cursor:
