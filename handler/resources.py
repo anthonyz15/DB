@@ -49,7 +49,7 @@ class ResourcesHandler:
         result['Location'] = rlocation
         return result
 
-    def dailyResourcesAvailable(self,row):
+    def build_dailyResourcesAvailable(self,row):
         result = {}
         result['Name'] = row[0]
         result['Location'] = row[1]
@@ -136,7 +136,7 @@ class ResourcesHandler:
         result = dao.dailyResourcesAvailable()
         result_list = []
         for row in result:
-            result = ResourcesHandler.dailyResourcesAvailable(row)
+            result = self.build_dailyResourcesAvailable(row)
             result_list.append(result)
         return jsonify(dailyResourcesAvailable=result_list), 200
 
