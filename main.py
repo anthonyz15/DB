@@ -47,6 +47,13 @@ def dailyMatching():
         else:
             return ResourcesHandler().dailyMatching(request.args.get('value'))
 
+@app.route('/ResourceManagement/resources/weeklyMatching', methods=['GET', 'POST'])
+def weeklyMatching():
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return ResourcesHandler().weeklyMatching(request.args.get('value'))
+
 @app.route('/ResourceManagement/resources/addrequest', methods=['GET', 'POST'])
 def addrequest():
     if request.method == 'POST':
