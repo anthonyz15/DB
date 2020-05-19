@@ -99,6 +99,23 @@ class RequestHandler:
             result_list.append(result)
         return jsonify(ResourcesinNeed=result_list), 200
 
+    def build_weeklyinneed(self, row):
+        result = {}
+        result['Name'] = row[1]
+        result['Quantity'] = row[2]
+        result['Date'] = row[0]
+
+        return result
+
+    def weeklyResourcesinNeed(self, date):
+        dao = RequestDAO()
+        result = dao.weeklyResourcesinNeed(date)
+        result_list = []
+        for row in result:
+            result = self.build_weeklyinneed(row)
+            result_list.append(result)
+        return jsonify(ResourcesinNeed=result_list), 200
+
     def insertrequestJson(json):
         rqaddress = json['rqaddress']
         quantity = json['quantity']

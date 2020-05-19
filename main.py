@@ -40,6 +40,30 @@ def dailyResourcesinNeed():
 def dailyResourcesAvailable():
     return ResourcesHandler().dailyResourcesAvailable()
 
+@app.route('/ResourceManagement/resources/dailyMatching', methods=['GET', 'POST'])
+def dailyMatching():
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return ResourcesHandler().dailyMatching(request.args.get('value'))
+
+@app.route('/ResourceManagement/resources/weeklyResourcesinNeed', methods=['GET', 'POST'])
+def weeklyResourcesinNeed():
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return RequestHandler().weeklyResourcesinNeed(request.args.get('value'))
+
+@app.route('/ResourceManagement/resources/weeklyMatching', methods=['GET', 'POST'])
+def weeklyMatching():
+        if not request.args:
+            return jsonify(Error="Missing value"), 400
+        else:
+            return ResourcesHandler().weeklyMatching(request.args.get('value'))
+
+
+
+
 @app.route('/ResourceManagement/resources/LocationMatching', methods=['GET', 'POST'])
 def locationMatching():
     return ResourcesHandler().locationMatching()
