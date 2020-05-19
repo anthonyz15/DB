@@ -96,7 +96,7 @@ class ResourcesDAO:
             result.append(row)
         return result
 
-    def dailyMatching(self,date):
+    def dailyMatching(self, date):
         cursor = self.conn.cursor()
         query = "SELECT resources.rname, request.rqdate, sum(request.quantity) as Needed, sum(resources.rquantity) as Available FROM public.request, public.requested, public.resources WHERE request.rqid = requested.rqid AND requested.rid = resources.rid and request.rqdate = %s and  resources.rid not in (select rid from contains) Group by resources.rname, request.rqdate ;"
         cursor.execute(query, (date,))
@@ -105,14 +105,29 @@ class ResourcesDAO:
             result.append(row)
         return result
 
-
-    def weeklyMatching(self,date):
+    def locationMatching(self):
         cursor = self.conn.cursor()
-        query = "SELECT to_char(rqdate, 'IYYY-IW') as YearWeek,resources.rname,sum(resources.rquantity) as Available,sum(request.quantity) as Needed FROM public.resources,public.request,public.requested WHERE request.rqid = requested.rqid AND request.rqaddress = resources.rlocation AND requested.rid = resources.rid group by resources.rname,to_char(rqdate, 'IYYY-IW');  "
-        cursor.execute(query, (date,date,),)
+        query = "SELECT resources.rname,  sum(resources.rquantity) as Available,   sum(request.quantity) as Needed,  request.rqaddress FROM public.resources, public.request,   public.requested WHERE   request.rqid = requested.rqid AND  request.rqaddress = resources.rlocation AND  requested.rid = resources.rid and resources.rid NOT IN (Select rid from contains) Group by resources.rname, request.rqaddress;"
+        cursor.execute(query, )
         result = []
         for row in cursor:
             result.append(row)
         return result
 
+    def locationAvailable(self):
+        cursor = self.conn.cursor()
+        query = " SELECT resources.rname, resources.rlocation, sum(resources.rquantity) as Available FROM public.resources WHERE resources.rid NOT IN (Select rid from contains)  Group by resources.rname,  resources.rlocation order by rlocation;"
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
+    def locationNeeded(self):
+        cursor = self.conn.cursor()
+        query = "SELECT resources.rname, sum(request.quantity) as Needed, request.rqaddress FROM public.request, public.requested, public.resources WHERE requested.rqid = request.rqid AND resources.rid = requested.rid Group By resources.rname, request.rqaddress order by rqaddress;"
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
