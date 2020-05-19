@@ -20,6 +20,55 @@ CORS(app)
 def greeting():
     return 'Hello, this is the resources DB App!'
 
+#get of all isa table from resources##############
+
+@app.route('/ResourceManagement/resources/water')
+def getwater():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/food')
+def getfood():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/ice')
+def getice():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/medications')
+def getmedications():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/fuel')
+def getfuel():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/medicaldevices')
+def getmedicaldevices():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/heavyequipment')
+def getheavyequipment():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/tools')
+def gettools():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/clothing')
+def getclothing():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/powergenerators')
+def getpowergenerators():
+    return ResourcesHandler().getreAvailability()
+
+@app.route('/ResourceManagement/resources/batteries')
+def getbatteries():
+    return ResourcesHandler().getreAvailability()
+
+#######################################################################
+
+
 
 @app.route('/ResourceManagement/resources/resourcesAvailability')
 def getreAvailability():

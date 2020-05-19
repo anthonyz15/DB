@@ -7,6 +7,202 @@ class ResourcesDAO:
                                                                            pg_config['passwd'])
         self.conn = psycopg2._connect(connection_url)
 
+
+
+##########################get or insert resources detail##############################
+
+    def getwater(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getfood(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getmedications(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getice(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getfuel(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getmedicaldevices(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getheavyequipment(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def gettools(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getclothing(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getpowergenerators(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def getbatteries(self):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM water"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return  result
+
+    def insertwater(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into water(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertfood(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into food(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertmedications(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into medications(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertice(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into ice(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertfuel(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into fuel(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertmedicaldevices(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into medical_devices(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertheavyequipment(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into heavy_equipment(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def inserttools(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into tools(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertclothing(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into clothing(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertpowergenerators(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into power_generators(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertbatteries(self, rname, rquantity, rprice, type, rlocation,description,brand):
+        cursor = self.conn.cursor()
+        query = "insert into batteries(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
+        cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+
+
+
+###########################################################################
+
     def getreAvailability(self):
         cursor = self.conn.cursor()
         query = "SELECT  rname,rquantity,rprice,rlocation FROM resources WHERE rid NOT IN (SELECT rid FROM contains)"
