@@ -60,6 +60,17 @@ class ResourcesHandler:
         result['Brand'] = brand
         return result
 
+    def build_resources_resourcesDetail(self,row):
+        result = {}
+        result['Name'] = row[0]
+        result['Quantity'] = row[3]
+        result['Price'] = row[2]
+        result['Type'] = row[1]
+        result['Location'] = row[4]
+        result['Descrption'] = row[5]
+        result['Brand'] = row[6]
+        return result
+
     def build_dailyResourcesAvailable(self,row):
         result = {}
         result['Name'] = row[0]
@@ -112,7 +123,7 @@ class ResourcesHandler:
         result = dao.getwater()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(Waters=result_list), 200
 
@@ -121,7 +132,16 @@ class ResourcesHandler:
         result = dao.getfood()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
+            result_list.append(result)
+        return jsonify(foods=result_list), 200
+
+    def getice(self):
+        dao = ResourcesDAO()
+        result = dao.getice()
+        result_list = []
+        for row in result:
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(foods=result_list), 200
 
@@ -130,7 +150,7 @@ class ResourcesHandler:
         result = dao.getmedications()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(medications=result_list), 200
 
@@ -139,7 +159,7 @@ class ResourcesHandler:
         result = dao.getfuel()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(fuels=result_list), 200
 
@@ -148,7 +168,7 @@ class ResourcesHandler:
         result = dao.getmedicaldevices()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(medicaldevices=result_list), 200
 
@@ -157,7 +177,7 @@ class ResourcesHandler:
         result = dao.getheavyequipment()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(heavyequipment=result_list), 200
 
@@ -166,7 +186,7 @@ class ResourcesHandler:
         result = dao.gettools()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(tools=result_list), 200
 
@@ -175,7 +195,7 @@ class ResourcesHandler:
         result = dao.getclothing()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(clothing=result_list), 200
 
@@ -184,7 +204,7 @@ class ResourcesHandler:
         result = dao.getpowergenerators()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(powergenerators=result_list), 200
 
@@ -193,7 +213,7 @@ class ResourcesHandler:
         result = dao.getbatteries()
         result_list = []
         for row in result:
-            result = self.build_resources_Availability(row)
+            result = self.build_resources_resourcesDetail(row)
             result_list.append(result)
         return jsonify(batteries=result_list), 200
 
@@ -340,67 +360,80 @@ class ResourcesHandler:
         rlocation = json['rlocation']
         description= json['description']
         brand = json['brand']
-        if rname and rquantity and rprice and type and rlocation and description and brand:
+        sid=json['sid']
+        if rname and rquantity and rprice and type and rlocation and description and brand and sid:
             if rname=="water":
                 dao = ResourcesDAO()
                 pid = dao.insertwater(rname, rquantity, rprice, type, rlocation,description,brand)
+                dao.insertsupplies(pid,sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description,brand)
                 return jsonify(Water=result), 200
             elif rname=="food":
                 dao = ResourcesDAO()
                 pid = dao.insertfood(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="medications":
                 dao = ResourcesDAO()
                 pid = dao.insertmedications(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="ice":
                 dao = ResourcesDAO()
                 pid = dao.insertice(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation, description, brand)
                 return jsonify(Water=result), 200
             elif rname=="fuel":
                 dao = ResourcesDAO()
                 pid = dao.insertfuel(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="medicaldevices":
                 dao = ResourcesDAO()
                 pid = dao.insertmedicaldevices(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="heavyequipment":
                 dao = ResourcesDAO()
                 pid = dao.insertheavyequipment(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="tools":
                 dao = ResourcesDAO()
                 pid = dao.inserttools(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="clothing":
                 dao = ResourcesDAO()
                 pid = dao.insertclothing(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="powergenerators":
                 dao = ResourcesDAO()
                 pid = dao.insertpowergenerators(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             elif rname=="batteries":
                 dao = ResourcesDAO()
                 pid = dao.insertbatteries(rname, rquantity, rprice, type, rlocation, description, brand)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresourcesDetail(rname, rquantity, rprice, type, rlocation,description, brand)
                 return jsonify(Water=result), 200
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
-        elif rname and rquantity and rprice and type and rlocation:
+        elif rname and rquantity and rprice and type and rlocation and sid:
                 dao = ResourcesDAO()
                 pid = dao.insertresources(rname, rquantity, rprice, type, rlocation)
+                dao.insertsupplies(pid, sid)
                 result = ResourcesHandler.build_resources_addresources(rname, rquantity, rprice, type, rlocation)
                 return jsonify(Water=result), 200
         else:

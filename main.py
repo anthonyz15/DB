@@ -24,47 +24,47 @@ def greeting():
 
 @app.route('/ResourceManagement/resources/water')
 def getwater():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getwater()
 
 @app.route('/ResourceManagement/resources/food')
 def getfood():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getfood()
 
 @app.route('/ResourceManagement/resources/ice')
 def getice():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getice()
 
 @app.route('/ResourceManagement/resources/medications')
 def getmedications():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getmedications()
 
 @app.route('/ResourceManagement/resources/fuel')
 def getfuel():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getfuel()
 
 @app.route('/ResourceManagement/resources/medicaldevices')
 def getmedicaldevices():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getmedicaldevices()
 
 @app.route('/ResourceManagement/resources/heavyequipment')
 def getheavyequipment():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getheavyequipment()
 
 @app.route('/ResourceManagement/resources/tools')
 def gettools():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().gettools()
 
 @app.route('/ResourceManagement/resources/clothing')
 def getclothing():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getclothing()
 
 @app.route('/ResourceManagement/resources/powergenerators')
 def getpowergenerators():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getpowergenerators()
 
 @app.route('/ResourceManagement/resources/batteries')
 def getbatteries():
-    return ResourcesHandler().getreAvailability()
+    return ResourcesHandler().getbatteries()
 
 #######################################################################
 

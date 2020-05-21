@@ -125,9 +125,18 @@ class PurchaseHandler:
         odate = json['odate']
         olocation = json['olocation']
         totalprice= json['totalprice']
-        if odate and olocation and totalprice:
+        coid = json['coid']
+        rid = json['rid']
+        quantity = json['quantity']
+        if odate and olocation and totalprice and coid and rid and quantity:
             dao = PurchaseDAO()
-            pid = dao.insertOrder(odate,olocation,totalprice)
+            pid = dao.insertOrder(odate, olocation, totalprice)
+            if totalprice>0:
+                dao.insertpurchases(pid, coid)
+            else:
+                dao.insertreserves(pid, coid)
+            for i in range(len(rid)):
+                dao.insertcontains(pid, rid[i], quantity[i])
             result = PurchaseHandler.build_resources_addOrder(odate,olocation,totalprice)
             return jsonify(request=result), 201
         else:

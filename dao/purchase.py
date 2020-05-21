@@ -95,7 +95,32 @@ class PurchaseDAO:
     def insertOrder(self, odate,olocation,totalprice):
         cursor = self.conn.cursor()
         query = "insert into orders(odate,olocation,totalprice) values (%s, %s, %s) returning oid;"
-        cursor.execute(query, (odate,olocation,totalprice,))
+        cursor.execute(query, (odate,olocation,totalprice))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertpurchases(self, pid,coid):
+        cursor = self.conn.cursor()
+        query = "insert into purchases(oid,coid) values (%s, %s) returning puid;"
+        cursor.execute(query, (pid,coid))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertreserves(self, pid, coid):
+        cursor = self.conn.cursor()
+        query = "insert into reserves(oid,coid) values (%s, %s) returning rvid;"
+        cursor.execute(query, (pid, coid))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+
+    def insertcontains(self, pid,rid,quantity):
+        cursor = self.conn.cursor()
+        query = "insert into contains(rid,oid,quantity) values (%s, %s,%s) returning coid;"
+        cursor.execute(query, (rid,pid,quantity))
         pid = cursor.fetchone()[0]
         self.conn.commit()
         return pid

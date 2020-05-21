@@ -59,6 +59,24 @@ class RequestDAO:
         self.conn.commit()
         return pid
 
+    def insertmakes(self, pid,coid):
+        cursor = self.conn.cursor()
+        query = "insert into makes(rqid,coid) values (%s, %s) returning mkid;"
+        cursor.execute(query, (pid,coid))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+
+    def insertrequested(self, pid,rid,quantity):
+        cursor = self.conn.cursor()
+        query = "insert into requested(rid,rqid,quantity) values (%s, %s,%s) returning rqdid;"
+        cursor.execute(query, (rid,pid,quantity))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+
 
 
 

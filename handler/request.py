@@ -120,9 +120,17 @@ class RequestHandler:
         rqaddress = json['rqaddress']
         quantity = json['quantity']
         rqdate = json['rqdate']
-        if rqaddress and quantity and rqdate:
+        coid = json['coid']
+        rid=json['rid']
+        quantity1= json['quantity1']
+        if rqaddress and quantity and rqdate and coid and rid and quantity1:
             dao = RequestDAO()
             pid = dao.insertrequest(rqaddress,quantity,rqdate)
+            dao.insertmakes(pid,coid)
+            for i in range(len(rid)):
+                print(rid[i])
+                print(quantity1[i])
+                dao.insertrequested(pid,rid[i],quantity1[i])
             result = RequestHandler.build_resources_addrequest(rqaddress,quantity,rqdate)
             return jsonify(request=result), 201
         else:

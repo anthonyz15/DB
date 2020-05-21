@@ -13,7 +13,7 @@ class ResourcesDAO:
 
     def getwater(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM water"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -22,7 +22,7 @@ class ResourcesDAO:
 
     def getfood(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM food"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -31,7 +31,7 @@ class ResourcesDAO:
 
     def getmedications(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM medications"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -40,7 +40,7 @@ class ResourcesDAO:
 
     def getice(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM ice"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -49,7 +49,7 @@ class ResourcesDAO:
 
     def getfuel(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query ="SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM fuel"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -58,7 +58,7 @@ class ResourcesDAO:
 
     def getmedicaldevices(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM medical_device"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -67,7 +67,7 @@ class ResourcesDAO:
 
     def getheavyequipment(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM heavy_equipment"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -76,7 +76,7 @@ class ResourcesDAO:
 
     def gettools(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM tool"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -85,7 +85,7 @@ class ResourcesDAO:
 
     def getclothing(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM clothing"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -94,7 +94,7 @@ class ResourcesDAO:
 
     def getpowergenerators(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM power_generator"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -103,7 +103,7 @@ class ResourcesDAO:
 
     def getbatteries(self):
         cursor = self.conn.cursor()
-        query = "SELECT * FROM water"
+        query = "SELECT rname,rtype,rquantity,rprice,rlocation,description,brand FROM battery"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -194,6 +194,15 @@ class ResourcesDAO:
         cursor = self.conn.cursor()
         query = "insert into batteries(rname,rquantity,rprice,rtype,rlocation,description,brand) values (%s, %s, %s, %s, %s,%s,%s) returning rid;"
         cursor.execute(query, (rname, rquantity, rprice, type, rlocation,description,brand))
+        pid = cursor.fetchone()[0]
+        self.conn.commit()
+        return pid
+
+    def insertsupplies(self, pid,sid):
+        cursor = self.conn.cursor()
+        print(pid,sid)
+        query = "insert into supplies(rid,sid) values (%s, %s) returning suid;"
+        cursor.execute(query, (pid,sid))
         pid = cursor.fetchone()[0]
         self.conn.commit()
         return pid
